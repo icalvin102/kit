@@ -1,5 +1,12 @@
 # @sveltejs/kit
 
+## 1.0.0-next.116
+
+### Patch Changes
+
+- ea8cd54: chore(kit): correct `engines` constraint
+- aedec24: Ensure router is initialized before parsing location
+
 ## 1.0.0-next.115
 
 ### Patch Changes
