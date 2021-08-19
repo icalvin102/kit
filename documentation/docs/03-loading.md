@@ -21,6 +21,7 @@ type LoadInput<
 	fetch: (info: RequestInfo, init?: RequestInit) => Promise<Response>;
 	session: Session;
 	context: Context;
+	uses: (resource: string) => void;
 };
 
 type LoadOutput<
@@ -117,6 +118,10 @@ So if the example above was `src/routes/blog/[slug].svelte` and the URL was `htt
 #### context
 
 `context` is passed from layout components to child layouts and page components. For the root `__layout.svelte` component, it is equal to `{}`, but if that component's `load` function returns an object with a `context` property, it will be available to subsequent `load` functions.
+
+#### uses
+
+`uses` registers a custom resource identifier that can be used with `invalidate(resource)` to re-run the load function that relies on the `resource`. 
 
 ### Output
 

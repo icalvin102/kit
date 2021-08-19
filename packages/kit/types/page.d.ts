@@ -9,6 +9,7 @@ export interface LoadInput<
 	fetch(info: RequestInfo, init?: RequestInit): Promise<Response>;
 	session: Session;
 	context: Context;
+	uses: (resource: string) => void;
 }
 
 export interface ErrorLoadInput<
