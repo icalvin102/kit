@@ -1,7 +1,14 @@
-import { router as router_ } from '../client/singletons.js';
 import { get_base_uri } from '../client/utils.js';
 
-const router = /** @type {import('../client/router').Router} */ (router_);
+/** @type {import('../client/router').Router?} */
+export let router;
+
+/** @param {import('../client/router').Router?} _ */
+export function init(_) {
+	router = _;
+}
+
+// const router = /** @type {import('../client/router').Router} */ (router_);
 
 /**
  * @param {string} name
@@ -12,10 +19,10 @@ function guard(name) {
 	};
 }
 
-export const goto = import.meta.env.SSR ? guard('goto') : goto_;
-export const invalidate = import.meta.env.SSR ? guard('invalidate') : invalidate_;
-export const prefetch = import.meta.env.SSR ? guard('prefetch') : prefetch_;
-export const prefetchRoutes = import.meta.env.SSR ? guard('prefetchRoutes') : prefetchRoutes_;
+export const goto = goto_;
+export const invalidate = invalidate_;
+export const prefetch = prefetch_;
+export const prefetchRoutes = prefetchRoutes_;
 
 /**
  * @type {import('$app/navigation').goto}

@@ -1,7 +1,6 @@
 {
-	"name": "@sveltejs/kit",
-	"version": "1.0.0-next.154",
-	"type": "module",
+	"name": "svelte-kitlike-router",
+	"version": "0.0.2",
 	"dependencies": {
 		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.16",
 		"cheap-watch": "^1.0.3",
@@ -36,7 +35,7 @@
 		"svelte": "^3.40.0",
 		"svelte-check": "^2.2.4",
 		"svelte2tsx": "~0.4.1",
-		"tiny-glob": "^0.2.8",
+		"tiny-glob": "^0.2.9",
 		"uvu": "^0.5.1"
 	},
 	"peerDependencies": {
@@ -47,9 +46,7 @@
 	},
 	"files": [
 		"assets",
-		"dist",
-		"types",
-		"svelte-kit.js"
+		"types"
 	],
 	"scripts": {
 		"build": "rollup -c",
@@ -66,17 +63,15 @@
 	},
 	"exports": {
 		"./package.json": "./package.json",
-		"./ssr": {
-			"import": "./dist/ssr.js"
-		},
-		"./node": {
-			"import": "./dist/node.js"
-		},
-		"./hooks": {
-			"import": "./dist/hooks.js"
-		},
-		"./install-fetch": {
-			"import": "./dist/install-fetch.js"
+		".": "./assets/index.js",
+		"./$app/navigation": "./assets/runtime/app/navigation.js",
+		"./$app/stores": "./assets/runtime/app/stores.js",
+		"./$app/paths": "./assets/runtime/app/paths.js",
+		"./$app/env": "./assets/runtime/app/env.js",
+		"./components/layout.svelte": "./assets/components/layout.svelte",
+		"./components/error.svelte": "./assets/components/error.svelte",
+		"./createmanifest": {
+			"require": "./assets/runtime/createmanifest.cjs"
 		},
 		"./types": "./types/index.d.ts"
 	},

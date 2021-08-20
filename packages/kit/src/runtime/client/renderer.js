@@ -321,8 +321,7 @@ export class Renderer {
 			props: {
 				stores: this.stores,
 				...result.props
-			},
-			hydrate: true
+			}
 		});
 
 		this.started = true;

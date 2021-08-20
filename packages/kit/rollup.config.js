@@ -18,7 +18,6 @@ export default [
 	{
 		input: {
 			'internal/start': 'src/runtime/client/start.js',
-			'internal/singletons': 'src/runtime/client/singletons.js',
 			'app/navigation': 'src/runtime/app/navigation.js',
 			'app/stores': 'src/runtime/app/stores.js',
 			'app/paths': 'src/runtime/app/paths.js',
@@ -28,12 +27,7 @@ export default [
 		},
 		output: {
 			dir: 'assets/runtime',
-			format: 'esm',
-			chunkFileNames: 'chunks/[name].js',
-			paths: {
-				ROOT: '../../generated/root.svelte',
-				MANIFEST: '../../generated/manifest.js'
-			}
+			format: 'esm'
 		},
 		external: ['svelte', 'svelte/store', 'ROOT', 'MANIFEST'],
 		plugins: [
@@ -44,33 +38,16 @@ export default [
 	},
 
 	{
-		input: {
-			cli: 'src/cli.js',
-			ssr: 'src/runtime/server/index.js',
-			node: 'src/core/node/index.js',
-			hooks: 'src/runtime/hooks.js',
-			'install-fetch': 'src/install-fetch.js'
-		},
+		input: 'src/runtime/client/create_manifest.js',
 		output: {
-			dir: 'dist',
-			format: 'esm',
-			chunkFileNames: 'chunks/[name].js'
-		},
-		external: (id) => {
-			return external.includes(id);
+			file: 'assets/runtime/createmanifest.cjs',
+			format: 'cjs'
 		},
 		plugins: [
-			replace({
-				preventAssignment: true,
-				values: {
-					__VERSION__: pkg.version
-				}
-			}),
 			resolve({
 				extensions: ['.mjs', '.js', '.ts']
 			}),
 			commonjs()
-		],
-		preserveEntrySignatures: true
+		]
 	}
 ];

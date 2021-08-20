@@ -1,18 +1,24 @@
 /**
+ * @param {string} key
+ * @returns {any}
+ */
+const env = (key) => (import.meta?.env)[key];
+
+/**
  * @type {import('$app/env').browser}
  */
-export const browser = !import.meta.env.SSR;
+export const browser = !env('SSR');
 /**
  * @type {import('$app/env').dev}
  */
-export const dev = !!import.meta.env.DEV;
+export const dev = !!env('DEV');
 /**
  * @type {import('$app/env').mode}
  */
-export const mode = import.meta.env.MODE;
+export const mode = env('MODE') || 'production';
 /**
  * @type {import('$app/env').amp}
  */
-export const amp = !!import.meta.env.VITE_SVELTEKIT_AMP;
+export const amp = !!env('VITE_SVELTEKIT_AMP');
 
 export { prerendering } from '../env.js';

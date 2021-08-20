@@ -1,6 +1,6 @@
 import { getContext } from 'svelte';
 
-const ssr = import.meta.env.SSR;
+const ssr = !!import.meta?.env?.SSR;
 
 // TODO remove this (for 1.0? after 1.0?)
 let warned = false;

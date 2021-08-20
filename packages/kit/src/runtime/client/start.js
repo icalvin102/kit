@@ -1,32 +1,21 @@
-// @ts-ignore - value will be replaced on build step
-import Root from 'ROOT'; // eslint-disable-line import/no-unresolved
-// @ts-ignore - value will be replaced on build step
-import { routes, fallback } from 'MANIFEST'; // eslint-disable-line import/no-unresolved
 import { Router } from './router.js';
 import { Renderer } from './renderer.js';
-import { init } from './singletons.js';
+import { init } from '../app/navigation.js';
 import { set_paths } from '../paths.js';
 
 /** @param {{
- *   paths: {
- *     assets: string;
- *     base: string;
- *   },
+ *   base: string;
  *   target: Node;
- *   session: any;
- *   host: string;
- *   route: boolean;
- *   spa: boolean;
  *   trailing_slash: import('types/internal').TrailingSlash;
- *   hydrate: {
- *     status: number;
- *     error: Error;
- *     nodes: Array<Promise<import('types/internal').CSRComponent>>;
- *     page: import('types/page').Page;
- *   };
+ *   routes: any;
+ *   fallback: any;
+ *   Root: any;
  * }} opts */
-export async function start({ paths, target, session, host, route, spa, trailing_slash, hydrate }) {
-	if (import.meta.env.DEV && !target) {
+export async function start({ base = '', target, trailing_slash = 'never', routes, fallback, Root }) {
+	const host = location.host;
+	const session = {};
+
+	if (!target) {
 		throw new Error('Missing target element. See https://kit.svelte.dev/docs#configuration-target');
 	}
 
@@ -38,23 +27,19 @@ export async function start({ paths, target, session, host, route, spa, trailing
 		host
 	});
 
-	const router = route
-		? new Router({
-				base: paths.base,
-				routes,
-				trailing_slash,
-				renderer
-		  })
-		: null;
+	const router = new Router({
+		base,
+		routes,
+		trailing_slash,
+		renderer
+	});
 
 	init(router);
-	set_paths(paths);
+	set_paths({ base, assets: ''});
 
-	if (hydrate) await renderer.start(hydrate);
-	if (router) {
-		if (spa) router.goto(location.href, { replaceState: true }, []);
-		router.init_listeners();
-	}
+	router.goto(location.href, { replaceState: true }, []);
+	router.init_listeners();
 
 	dispatchEvent(new CustomEvent('sveltekit:start'));
 }
+
