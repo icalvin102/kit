@@ -4,7 +4,13 @@ import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import pkg from './package.json';
 
-(fs.rmSync || fs.rmdirSync)('assets/runtime', { recursive: true, force: true });
+[
+	'assets/runtime',
+	'router/runtime',
+	'router/createmanifest'
+].forEach((path) => {
+	(fs.rmSync || fs.rmdirSync)(path, { recursive: true, force: true });
+});
 
 const external = [].concat(
 	Object.keys(pkg.dependencies || {}),
@@ -26,10 +32,13 @@ export default [
 			env: 'src/runtime/env.js'
 		},
 		output: {
-			dir: 'assets/runtime',
-			format: 'esm'
+			dir: 'router/runtime',
+			format: 'esm',
+			paths: {
+				ROOT: '../../components/root.svelte'
+			}
 		},
-		external: ['svelte', 'svelte/store', 'ROOT', 'MANIFEST'],
+		external: ['svelte', 'svelte/store', 'ROOT'],
 		plugins: [
 			resolve({
 				extensions: ['.mjs', '.js', '.ts']
@@ -40,7 +49,7 @@ export default [
 	{
 		input: 'src/runtime/client/create_manifest.js',
 		output: {
-			file: 'assets/runtime/createmanifest.cjs',
+			file: 'router/createmanifest/index.cjs',
 			format: 'cjs'
 		},
 		plugins: [

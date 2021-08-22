@@ -114,10 +114,11 @@ function stringifyManifest(manifest, dir) {
 }
 
 function createManifestPlugin() {
+	const pattern = /manifest\.(ts|js)/;
 	return {
 		name: NAME,
 		transform(code, id) {
-			if(basename(id) === 'manifest.js') {
+			if (pattern.test(basename(id))) {
 				const manifest = createManifest(dirname(id));
 				console.log('creaded manifest');
 				console.log(manifest);

@@ -1,3 +1,5 @@
+// @ts-expect-error
+import Root from 'ROOT'; // eslint-disable-line import/no-unresolved
 import { Router } from './router.js';
 import { Renderer } from './renderer.js';
 import { init } from '../app/navigation.js';
@@ -11,7 +13,7 @@ import { set_paths } from '../paths.js';
  *   fallback: any;
  *   Root: any;
  * }} opts */
-export async function start({ base = '', target, trailing_slash = 'never', routes, fallback, Root }) {
+export async function start({ base = '', target, trailing_slash = 'never', routes, fallback }) {
 	const host = location.host;
 	const session = {};
 
