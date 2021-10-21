@@ -7,6 +7,7 @@ export type NavigationInfo = {
 	path: string;
 	decoded_path: string;
 	query: URLSearchParams;
+	querystring: string;
 };
 
 export type NavigationCandidate = {

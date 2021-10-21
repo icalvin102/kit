@@ -24,6 +24,7 @@ export type Location<Params extends Record<string, string> = Record<string, stri
 	path: string;
 	params: Params;
 	query: URLSearchParams;
+	querystring: string;
 };
 
 export type InferValue<T, Key extends keyof T, Default> = T extends Record<Key, infer Val>

@@ -167,7 +167,8 @@ export class Renderer {
 							status: node.loaded.status,
 							error: node.loaded.error,
 							path: page.path,
-							query: page.query
+							query: page.query,
+							querystring: page.querystring
 						};
 					} else if (node.loaded.context) {
 						context = {
@@ -188,7 +189,8 @@ export class Renderer {
 				status: 500,
 				error: coalesce_to_error(e),
 				path: page.path,
-				query: page.query
+				query: page.query,
+				querystring: page.querystring
 			});
 		}
 
@@ -240,7 +242,8 @@ export class Renderer {
 					status: 500,
 					error: new Error('Redirect loop'),
 					path: info.path,
-					query: info.query
+					query: info.query,
+					querystring: info.querystring
 				});
 			} else {
 				if (this.router) {
@@ -375,7 +378,8 @@ export class Renderer {
 			status: 404,
 			error: new Error(`Not found: ${info.path}`),
 			path: info.path,
-			query: info.query
+			query: info.query,
+			querystring: info.querystring
 		});
 	}
 
@@ -499,6 +503,10 @@ export class Renderer {
 					get query() {
 						node.uses.query = true;
 						return page.query;
+					},
+					get querystring() {
+						node.uses.query = true;
+						return page.querystring;
 					}
 				},
 				get session() {
@@ -542,7 +550,7 @@ export class Renderer {
 	 * @param {boolean} no_cache
 	 * @returns {Promise<import('./types').NavigationResult | undefined>} undefined if fallthrough
 	 */
-	async _load({ route, info: { path, decoded_path, query } }, no_cache) {
+	async _load({ route, info: { path, decoded_path, query, querystring } }, no_cache) {
 		const key = `${decoded_path}?${query}`;
 
 		if (!no_cache) {
@@ -564,7 +572,7 @@ export class Renderer {
 		};
 
 		/** @type {import('types/page').Page} */
-		const page = { host: this.host, path, query, params };
+		const page = { host: this.host, path, query, querystring, params };
 
 		/** @type {Array<import('./types').BranchNode | undefined>} */
 		const branch = [];
@@ -678,7 +686,8 @@ export class Renderer {
 					status,
 					error,
 					path,
-					query
+					query,
+					querystring
 				});
 			} else {
 				if (node && node.loaded && node.loaded.context) {
@@ -701,13 +710,15 @@ export class Renderer {
 	 *   error: Error;
 	 *   path: string;
 	 *   query: URLSearchParams
+	 *   querystring: string
 	 * }} opts
 	 */
-	async _load_error({ status, error, path, query }) {
+	async _load_error({ status, error, path, query, querystring }) {
 		const page = {
 			host: this.host,
 			path,
 			query,
+			querystring,
 			params: {}
 		};
 

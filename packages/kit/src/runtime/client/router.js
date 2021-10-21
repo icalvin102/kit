@@ -173,10 +173,11 @@ export class Router {
 			const decoded_path = decodeURI(path);
 			const routes = this.routes.filter(([pattern]) => pattern.test(decoded_path));
 
-			const query = new URLSearchParams(url.search);
+			const querystring = url.search.slice(1);
+			const query = new URLSearchParams(querystring);
 			const id = `${path}?${query}`;
 
-			return { id, routes, path, decoded_path, query };
+			return { id, routes, path, decoded_path, query, querystring };
 		}
 	}
 
