@@ -1,6 +1,6 @@
 {
 	"name": "svelte-kitlike-router",
-	"version": "0.0.8",
+	"version": "0.1.1",
 	"type": "module",
 	"devDependencies": {
 		"@rollup/plugin-replace": "^2.4.2",
@@ -46,6 +46,7 @@
 		"./components/layout.svelte": "./components/layout.svelte",
 		"./components/error.svelte": "./components/error.svelte",
 		"./createmanifest": {
+			"import": "./createmanifest/index.js",
 			"require": "./createmanifest/index.cjs"
 		},
 		"./types": "./types/index.d.ts"

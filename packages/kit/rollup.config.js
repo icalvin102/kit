@@ -58,5 +58,19 @@ export default [
 			}),
 			commonjs()
 		]
+	},
+
+	{
+		input: 'src/runtime/client/create_manifest.js',
+		output: {
+			file: 'router/createmanifest/index.js',
+			format: 'esm'
+		},
+		plugins: [
+			resolve({
+				extensions: ['.mjs', '.js', '.ts']
+			}),
+			commonjs()
+		]
 	}
 ];
